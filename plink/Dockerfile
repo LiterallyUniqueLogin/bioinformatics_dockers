@@ -23,6 +23,10 @@ RUN micromamba install -y -n base -f /tmp/env.yml && \
 # (gotten from reading the output that micromamba shell init -s bash
 # spits into the .bashrc file)
 # as well as a command to activate the base environment.
-COPY activate_env /tmp/activate_env
-ENV BASH_ENV=/tmp/activate_env
+
+USER root
+RUN mkdir /container_install
+COPY activate_env /container_install/activate_env
+USER 1001
+ENV BASH_ENV=/container_install/activate_env
 

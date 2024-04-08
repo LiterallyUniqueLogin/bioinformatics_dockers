@@ -28,4 +28,3 @@ RUN mkdir /container_install
 COPY activate_env /container_install/activate_env
 USER 1001
 ENV BASH_ENV=/container_install/activate_env
-

@@ -4,6 +4,11 @@ SHELL ["/bin/bash", "-c"]
 USER root
 RUN apt-get update && apt-get upgrade -y
 
+# Necessary for firefox (which will be installed via conda) which is necessary for bokeh export plots
+RUN apt-get install -y libgtk-3-0 libasound2 libdbus-glib-1-2 libx11-xcb-dev libpci-dev libgl1-mesa-glx
+# necessary for finemap, for some reason conda's install of libgomp doesn't satisfy the dependency
+RUN apt-get install -y libgomp1
+
 USER 1001
 COPY --chown=$MAMBA_USER:$MAMBA_USER env.yml /tmp/env.yml
 RUN micromamba install -y -n base -f /tmp/env.yml && \
